@@ -1,53 +1,51 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-public class Seek : MonoBehaviour
+public class Seek : SteeringBehaviour
 {
-    public GameObject targetGameObject;
+    public GameObject targetGameObject = null;
     public Vector3 target = Vector3.zero;
-    public Vector3 acceleration = Vector3.zero;
-    public Vector3 velocity = Vector3.zero;
-    public float maxSpeed = 5.0f;
-    public float mass = 1;
-    public Vector3 force = Vector3.zero;
+    public Vector3 aboveEnemy = Vector3.zero;
+    
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
-        if (targetGameObject != null)
+        if (isActiveAndEnabled && Application.isPlaying)
         {
-            target = targetGameObject.transform.position;
+            Gizmos.color = Color.cyan;
+            if (targetGameObject != null)
+            {
+                target = targetGameObject.transform.position;
+            }
+            Gizmos.DrawLine(transform.position, target);
         }
-        Gizmos.DrawLine(transform.position, target);
     }
 
-    public Vector3 SeekForce(Vector3 target)
+    public override Vector3 Calculate()
     {
-        Vector3 desired = target - transform.position;
-        desired.Normalize();
-        desired *= maxSpeed;
-        return desired - velocity;
+        return boid.SeekForce(target);
     }
 
-    private void Update()
+    public void Update()
     {
-        if (targetGameObject != null)
+        if(aboveEnemy == Vector3.zero || this.gameObject.tag != "JamesBond")
         {
-            target = targetGameObject.transform.position;
-            force = SeekForce(target);
+            if (targetGameObject != null)
+            {
+                target = targetGameObject.transform.position;
+            }
+            else
+            {
+                target = transform.position + new Vector3(0f, 0f, 100f);
+            }
         }
-
-        acceleration = force / mass;
-        velocity += acceleration * Time.deltaTime;
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-
-        if (velocity.magnitude > 0.0001f)
+        else
         {
-            transform.LookAt(transform.position + velocity);
-            velocity *= 0.99f;
+            target = aboveEnemy;
         }
-        transform.position += velocity * Time.deltaTime;
+        
     }
 }
