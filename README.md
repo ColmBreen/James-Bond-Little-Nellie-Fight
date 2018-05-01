@@ -5,6 +5,10 @@ I plan to recreate the little nellie helicopter battle from 'James Bond: You Onl
 
 https://youtu.be/pT8Lp1SO_YU?t=260
 
+Finished Assignment:
+
+https://www.youtube.com/watch?v=PSYrwPxgViQ&feature=youtu.be
+
 <img src="Storyboard/IMG_20180311_180158.jpg" alt="Storyboard Image 1">
 <img src="Storyboard/IMG_20180311_180405.jpg" alt="Storyboard Image 2">
 <img src="Storyboard/IMG_20180311_180327.jpg" alt="Storyboard Image 3">
